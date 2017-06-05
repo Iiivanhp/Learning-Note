@@ -1,0 +1,156 @@
+git学习笔记
+	来源 http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000
+
+版本库（repository）
+	目录，这个目录里面的所有文件都可以被Git管理起来，
+	每个文件的修改、删除，Git都能跟踪，
+	以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。
+创建版本库 
+	mkdir 创建空目录
+	cd 进入子目录
+	pwd 显示当前工作目录
+	
+	git init 将当前目录变成git仓库
+	git add filename 将文件添加到仓库
+	git commit -m "instruction" 文件提交
+	
+	git status 查看仓库当前状态，可看到文本被改变的提升
+	git diff （filename） 查看文件被修改的地方
+	
+	git add filename 将被修改的文件进行提交预备，此后commit指令将提交被add文件
+
+版本回退
+	commit的意义在于存档，使得以后可以恢复适当的commit版本，然后继续工作
+	git log 查看提交历史记录 --pretty=oneline参数 简化输出信息
+	HEAD表示当前版本，HEAD^,HEAD^^,...HEAD~100代表之前版本
+	
+	git reset --hard HEAD^ 返回上个版本
+	git reset --hard 版本号 回到指定版本，可以去到被废弃的未来版本
+	git reflog 查看指令记录，可以用于查询版本号
+
+工作区和暂存区
+	工作区 电脑里显示的目录，如learngit
+	版本库（.git文件夹） 包括暂存区，master分支，master指针等
+	git add指令，将文件修改添加至暂存区
+	git commit指令，将暂存区所有内容提交到当前分支
+
+管理修改
+	未add的修改不会提交到版本库中
+	git diff HEAD -- filename 查看工作区和版本库中最新版本的区别
+
+撤销修改
+	git checkout -- filename 撤销当前修改操作，会回到最近一次git add或者git commit的文件
+	git reset HEAD filename 撤销暂存区中的修改,下一步可以进行工作区的撤销
+
+删除文件
+	rm filename 删除工作区文件
+	git rm filename 删除暂存区文件，需要commit
+	git checkout -- filename 恢复删除，本质用版本库文件替换工作区文件
+
+远程仓库
+	github 远程托管仓库
+	SSH秘钥相关内容
+	*windows系统下似乎不能使用ssh协议传输
+	
+添加远程库
+	创建新仓库
+	git remote add origin git@github.com:Iiivanhp/learngit.git 关联远程git仓库（SSH协议）
+	git remote add origin https://github.com/Iiivanhp/learngit.git 关联远程git仓库（HTTPS协议）
+	git push 将当前分支推送到远程 -u参数 关联分支，第一次推送时使用
+
+从远程库克隆
+	在github上创建库，然后克隆到本地
+	git clone https://github.com/Iiivanhp/gitskills.git 克隆远程库到本地
+
+分支管理
+	分支 互相独立的世界，文件互不影响，有利于多人协作中各自工作，最后再统一汇合
+	master分支 默认版本时间线。HEAD指针严格来说指向master而非提交。HEAD指针代表的是当前分支
+	git checkout -b dev	带-b参数时，checkout表示创建并切换分支
+	git branch	查看当前分支
+	git branch branchname 创建分支
+	git checkout branchname 切换分支
+	git merge branchname 合并某分支到当前分支 "快进模式",指针指到同一版本库
+	git branch -d branchname 删除分支
+	
+解决冲突
+	当两个分支都有新提交时，不能简单合并，需要先解决冲突然后进行提交
+		进行merge操作后，被合并文件会同时存在多个版本的描述，修改后再次提交即可，add/commit可解决merge failed
+	git log --graph 查看分支图
+
+分支管理策略
+	git merge -no-ff -m "message" branchname 非快速模式合并，会创建一个新的commit，能够保存两个版本
+	分支策略
+		master分支，保持稳定，仅用来发布新版本
+		dev分支，用于干活，相对不稳定
+		个人分支，每个人都有自己的工作，每个人做完后向dev合并
+
+bug分支		
+	修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除；
+	当手头工作没有完成时，先把工作现场git stash一下，然后去修复bug，修复后，再git stash pop，回到工作现场。
+	git stash 保存当前工作现场（未提交的作业）
+	git stash list 查看stash列表
+	git stash apply <stash序号> 恢复stash内容但不删除
+	git stash drop  stash删除
+	git stash pop   stash替换（恢复+删除）
+	实际操作有许多考虑，如多人协作、主分支和工作分支等，按照廖雪峰老师教程操作是比较稳当的
+
+feather分支
+	删除非当前分支时，需要用-D参数
+	git branch -D feature-vulcan
+	
+多人协作
+	git remote 查看远程库信息 带-v参数可以查看详细信息
+	git push origin master 推送分支
+		相关策略：master分支作为主分支需要随时同步，dev分支用于开发，同样需要同步
+				  bug分支只用于本地修bug，不需同步只需合并到master
+				  feature分支的推送取决于是否共同开发
+	
+	git clone http:... 克隆远程库，克隆时默认只会创建master分支（?）
+	git checkout -b dev origin/dev 从远程库抓取dev分支并在本地创建
+	git push origin dev 将当前工作分支推送到指定远程库 
+	
+	git branch --set-upstream dev origin/dev 关联dev分支和远程库中dev分支
+	git pull 将远程分支抓取到本地并覆盖
+	解决冲突后commit
+	git push origin dev 推送到远程库分支
+	
+	*push和pull操作只能在对有关联的分支进行（？）
+	
+	多人协作工作模式
+		1.git push origin branchname 推送自己修改
+		2.若推送失败，说明远程分支更新过，需要git pull
+		3.若合并冲突，则解决冲突并本地提交
+		4.再次git push
+		*.若提示no tracking information，说明需要先关联远程分支和本地分支 --set-upstream
+
+标签管理
+	标签相当于指针，作用于具体的commit；commit版本号和标签的关系可类比IP和域名
+	
+	git tag name 默认为当前分支的最新版本打tag
+	git tag 查看所有标签
+	git tag name commitid 给指定版本打tag
+	git show tagname 查看标签信息
+	git tag -a tagname -m "message" commitid 附带信息的标签指定	
+	git tag -s tagname -m "message" commitid 标签用私钥签名（PGP）
+	git tag -d tagname 删除本地标签
+	git push origin tagname 推送标签到远程库
+	git push origin --tags 推送全部未推送的标签
+	git push origin :refs/tags/tagname 删除远程库标签
+
+使用github
+	参与开源项目
+	fork 在自己账号下克隆他人的仓库
+	clone 将仓库克隆到本地
+	pull request 请求官方库接受修改
+
+自定义git
+	颜色 git config --global color.ui true
+
+	.gitignore文件 让git忽略相关文件的提交
+		原则 忽略操作系统自动生成的文件，比如缩略图等；
+			 忽略编译生成的中间文件、可执行文件等，也就是如果一个文件是通过另一个文件自动生成的，那自动生成的文件就没必要放进版本库，比如Java编译产生的.class文件；
+			 忽略你自己的带有敏感信息的配置文件，比如存放口令的配置文件。
+		操作：白名单、强制添加、检查gitignore等等
+
+	git config --global alias nickname command 配置别名
+	
