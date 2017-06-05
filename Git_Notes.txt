@@ -157,6 +157,25 @@ feather分支
 		git解析时会把别名转化为对应字符串，如unstage解析为reset HEAD
 	配置文件地址 .git/config
 	
-		
+搭建Git服务器
+	在私有服务器上使用Git，Linux系统如Ubuntu
+	流程（已有sudo权限）
+		1.安装git sudo apt-get install git 
+		2.创建Git用户以运行git服务 sudo adduser git 
+		3.创建证书登陆，即把各用户的公钥导入到配置文件中
+		4.初始化git仓库 sudo git init --bare sample.git
+			裸仓库，无工作区，用户不能直接登陆服务器进行修改
+			把owner改为git sudo chown -R git:git sample.git
+		5.禁用shell 编辑/etc/passwd文件
+			将git:x:1001:1001:,,,:/home/git:/bin/bash 改为git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell
+		6.克隆 git clone git@server:/srv/sample.git
+	
+	公钥管理 gitosis
+	权限管理 gitolite
+
+期末总结
+	git官网 https://git-scm.com/
+	常用指令Git cheat Sheet  https://pan.baidu.com/s/1kU5OCOB#list/path=%2Fpub%2Flego&parentPath=%2F
+		    
 	
 	
