@@ -152,5 +152,11 @@ feather分支
 			 忽略你自己的带有敏感信息的配置文件，比如存放口令的配置文件。
 		操作：白名单、强制添加、检查gitignore等等
 
-	git config --global alias nickname command 配置别名
+	git config --global alias.nickname command 配置别名（全局）
+	git config --global alias.nickname 'line' 对字符串配置别名（全局），如'unstage'
+		git解析时会把别名转化为对应字符串，如unstage解析为reset HEAD
+	配置文件地址 .git/config
+	
+		
+	
 	
