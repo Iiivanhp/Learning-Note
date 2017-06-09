@@ -1,0 +1,16 @@
+Vim 学习笔记 
+参考：简明Vim练级攻略
+
+存活
+	Vim分为两种模式，normal（进入时默认）和insert
+	指令i可以切换到insert，再按esc可以切回normal模式
+
+	基本指令
+	i insert模式
+	esc normal模式
+	:wq 存盘退出
+	dd 删除当前行，并复制到剪切板
+	p 粘贴
+
+	hjkl 光标移动
+	:help <command> 帮助文档
