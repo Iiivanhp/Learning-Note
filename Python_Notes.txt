@@ -1,6 +1,28 @@
 Python笔记 
 source：http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000
 
+零、	python基础
+1.数据类型和变量
+
+2.字符串和编码
+
+3.list和tuple
+
+4.条件判断
+	age = 20
+	if age >= 18:   #注意冒号
+		print('your age is', age)
+		print('adult')
+	#根据缩进来判断程序块
+	elif age >= 6:
+		print('teenager')
+	else:
+		print('your age is', age)
+		print('kid')
+5.循环
+
+6.dict和set
+
 一、	Python-函数
 1.	函数调用
 a)	https://docs.python.org/3/library/functions.html  python内置函数，可通过help（）查看函数作用
