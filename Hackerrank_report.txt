@@ -1,0 +1,13 @@
+Hackerrank report
+
+
+30 Days of Code （python3）
+2.  类型转换 int(input()) float(input())
+3.  整除 //
+	取模 %
+	
+	字符串的strip函数
+	s.strip() 默认删除空白符如 \t \n \r
+
+4.  类与实例
+	self的运用
