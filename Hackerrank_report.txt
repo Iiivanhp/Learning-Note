@@ -8,6 +8,20 @@ Hackerrank report
 	
 	字符串的strip函数
 	s.strip() 默认删除空白符如 \t \n \r
+	输入时忽略换行符 input().strip()
 
 4.  类与实例
 	self的运用
+	
+	
+10 Days of Statistics
+1.  输入处理
+		input字符串
+		
+	输出控制
+		借用格式串
+		%.3e 输出4位有效数字，指数形式
+		%.3f 输出三位小数
+		%.3g 当超出所给精度时使用指数，且尽可能简洁（省略无用0）
+		
+		round函数，同样可以控制位数，其尾数将会四舍五入

@@ -20,7 +20,24 @@ source：http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d
 		print('your age is', age)
 		print('kid')
 5.循环
-
+	for in循环
+		循环一个列表
+			names = ['Michael', 'Bob', 'Tracy']
+			for name in names:
+				print(name)
+		可以设置range（n）循环来循环n次，被迭代变量是0到n-1
+			sum = 0
+				for x in range(101):
+				sum = sum + x
+				print(sum)
+	while循环
+		条件循环
+		sum = 0
+		n = 99
+		while n > 0:
+			sum = sum + n
+			n = n - 2
+		print(sum)
 6.dict和set
 
 一、	Python-函数
